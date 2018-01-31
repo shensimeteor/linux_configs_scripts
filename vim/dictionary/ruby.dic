@@ -1,0 +1,6 @@
+" Vim dictionary file
+" Language:     Ruby
+" Maintainer:   Li Dong <dongli@lasg.iap.ac.cn>
+" Last Change:  2013-04-09
+
+attr_accessor

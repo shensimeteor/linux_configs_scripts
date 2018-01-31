@@ -1,0 +1,158 @@
+" Vim syntax file
+" Language:     Fortran
+" Maintainer:   Li Dong <dongli@lasg.iap.ac.cn>
+" Last Change:  2012-11-09
+" Remark:       Following very strict coding style of Fortran.
+
+" Use our brand new Fortran syntax!
+"let b:current_syntax = "fortran"
+
+" We like case sensitive Fortran!
+"syntax case match
+syntax case ignore
+
+" types
+" - basic types
+syntax match fortranType /^\(    \)*\(integer\|real\|character\|logical\)\>/
+" - user defined types
+syntax match fortranType /^\(    \)*\(end \)*type\>/
+syntax match fortranType /^\(    \)*class\>/
+
+" other keywords
+syntax match fortranKeyword /\(^\(    \)*\|; *\)\@<=call\>/
+syntax match fortranKeyword /^\(    \)*\(use\|contains\)\>/
+syntax match fortranKeyword /\(^\(    \)*use \w\+, \)\@<=only\(:\)\@=\>/
+syntax match fortranKeyword /^\(    \)*implicit none\>/
+syntax match fortranKeyword /^\(    \)*\(private\|public\)\>/
+syntax match fortranKeyword /^\(    \)*namelist\>/
+syntax match fortranKeyword /^\(    \)*\(open\|read\|write\|close\)\>/
+syntax match fortranKeyword /^\(    \)*\(cycle\|return\|exit\)\>/
+syntax match fortranKeyword /\<procedure\>/
+syntax match fortranKeyword /\(^\(    \)*function \w\+(.*) \)\@<=result\>/
+
+" attributes
+syntax region fortranAttribute start=/, parameter/hs=s+2 end=/\( ::\)*/he=s-1
+syntax region fortranAttribute start=/, allocatable/hs=s+2 end=/\( ::\)*/he=s-1
+syntax region fortranAttribute start=/, pointer/hs=s+2 end=/\( ::\)*/he=s-1
+syntax region fortranAttribute start=/, target/hs=s+2 end=/\( ::\)*/he=s-1
+syntax region fortranAttribute start=/, optional/hs=s+2 end=/\( ::\)*/he=s-1
+syntax region fortranAttribute start=/, dimension(.*)/hs=s+2 end=/\( ::\)*/he=s-1
+syntax region fortranAttribute start=/, intent(\(in\|out\|inout\))/hs=s+2 end=/\( ::\)*/he=s-1
+syntax region fortranAttribute start=/, extends(.*)/hs=s+2 end=/\( ::\)*/he=s-1
+syntax region fortranAttribute start=/, public/hs=s+2 end=/\( ::\)*/he=s-1
+syntax region fortranAttribute start=/, private/hs=s+2 end=/\( ::\)*/he=s-1
+
+" procedures
+syntax match fortranProcedure /^\(    \)*\(end \)*program\>/
+syntax match fortranProcedure /^\(    \)*\(end \)*module\>/
+syntax match fortranProcedure /^\(    \)*\(end \)*subroutine\>/
+syntax match fortranProcedure /^\(    \)*\([^ ]* \)*function\>/ contains=ALL
+syntax match fortranProcedure /^\(    \)*end function\>/
+
+" interface
+syntax match fortranInterface /^\(    \)*\(end \)*interface\>/
+
+" controls
+" - if
+syntax match fortranCondition /^\(    \)*if\( (\)\@=/
+syntax match fortranCondition /\() \)\@<=then/
+syntax match fortranCondition /^\(    \)*else\( if\)*/
+syntax match fortranCondition /^\(    \)*end if\>/
+" - do
+syntax match fortranDo /^\(    \)*\(end \)*do\>/ contains=fortranWhile
+syntax keyword fortranWhile while
+" - select case
+syntax match fortranSelect /^\(    \)*select case /
+syntax match fortranSelect /^\(    \)*end select\>/
+syntax match fortranSelect /^\(    \)*case /
+" - select type
+syntax match fortranSelect /^\(    \)*select type /
+syntax match fortranSelect /^\(    \)*\(type is\|class is\|class default\) /
+
+" comments and highlights
+syntax keyword fortranTodo TODO contained
+syntax keyword fortranFixme FIXME contained
+syntax match fortranComment /!.*/ contains=fortranTodo,fortranFixme
+syntax region fortranComment start=/!/ end=/$/ contained contains=fortranTodo,fortranFixme
+
+" preprocesses
+syntax region fortranPreProc start=/#/ end=/$/ contains=fortranComment,fortranPreProcLineContinue keepend
+syntax match fortranPreProcLineContinue "\\$" contained
+
+" string
+syntax region fortranString start=/"/ skip=/""/ end=/"/
+
+" numerics
+syntax match fortranNumber /\<\d\+\(\.\d*\(d\|D\|e\|E\)\(-\|+\)\?\d\+\)*\>/
+
+" logics
+syntax match fortranLogic /\(\.true\.\|\.false\.\)/
+
+" call procedures
+syntax match fortranCallProcedure /\(call \)\@<=\w\+\((\)\@=/
+
+" procedure arguments
+syntax match fortranProcedureArguments /\(^\(    \)*.*, intent(.*).* :: .*\)\@<=\(([^)]*\)\@<!\w\+\([^(]*)\)\@!/
+
+" intrinsic math functions
+syntax match fortranIntrinsic /\<\(sum\|log\|abs\|cos\|sin\|tan\|mod\)\>/
+syntax match fortranIntrinsic /\<\(acos\|asin\|atan\|atan2\|sqrt\)\>/
+syntax match fortranIntrinsic /\<\(min\|max\|minval\|maxval\)\>/
+syntax match fortranIntrinsic /\<\(int\|real\|nint\|floor\|ceiling\)\>/
+
+" intrinsic base functions
+syntax match fortranIntrinsic /^\(    \)*\<\(nullify\|allocate\|deallocate\)\>/
+syntax match fortranIntrinsic /\<\(allocated\|associated\|present\)\>/
+syntax match fortranIntrinsic /\<\(shape\|reshape\|merge\|lbound\|ubound\)\>/
+syntax match fortranIntrinsic /\<\(trim\|len_trim\)\>/
+
+" intrinsic operators
+syntax match fortranConditionOperator /\(==\|>=\|<=\|>\|<\|\/=\)/
+syntax match fortranConditionOperator /\(\.and\.\|\.or\.\|\.not\.\)/
+syntax match fortranPointerOperator /=>/
+syntax match fortranMathOperator /\(+\|-\|*\|\/\(\)\(=\)\@!\)/
+
+" continue line
+syntax match fortranContinueLine /&/
+
+" debug keywords
+syntax match fortranDebug /\<\(stop\|print\)\>/
+
+" blocks
+syntax match fortranAssociate /^\(    \)*\(end \)*associate\>/
+
+" ------------------------------------------------------------------------------
+" highligh links
+"highlight fortranProcedureArguments cterm=undercurl ctermfg=red
+"highlight link fortranType Type
+"highlight link fortranKeyword Keyword
+"highlight link fortranAttribute Keyword
+"highlight link fortranProcedure Function
+"highlight link fortranInterface Function
+"highlight link fortranCondition Conditional
+"highlight link fortranConditionOperator Operator
+"highlight link fortranSelect Conditional
+"highlight link fortranDo Repeat
+"highlight link fortranWhile Repeat
+"highlight link fortranTodo Todo
+"highlight link fortranFixme Todo
+"highlight link fortranContinueLine Todo
+"highlight link fortranComment Comment
+"highlight link fortranPreProc PreProc
+"highlight link fortranPreProcLineContinue PreProc
+"highlight link fortranString String
+"highlight link fortranNumber Number
+"highlight link fortranLogic Boolean
+highlight link fortranCallProcedure Underlined
+"highlight link fortranIntrinsic Keyword
+"highlight link fortranPointerOperator Operator
+"highlight link fortranMathOperator Operator
+"highlight link fortranAssociate Keyword
+highlight link fortranDebug Error
+
+" ------------------------------------------------------------------------------
+" folding
+"setlocal foldmethod=syntax
+"setlocal foldnestmax=2
+"syntax region fortranSubroutineFold start="^\(    \)*subroutine\>" end="^\(    \)*end subroutine\>" transparent fold keepend extend
+"syntax region fortranFunctionFold start="^\(    \)*function\>" end="^\(    \)*end function\>" transparent fold keepend extend

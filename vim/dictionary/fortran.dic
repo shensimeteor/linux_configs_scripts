@@ -1,0 +1,18 @@
+" Vim dictionary file
+" Language:     Fortran
+" Maintainer:   Li Dong <dongli@lasg.iap.ac.cn>
+" Last Change:  2012-11-11
+
+integer real character logical type class
+
+end contains implicit none
+
+program subroutine function
+
+parameter procedure private public pointer target dimention extends intent
+
+in out inout
+
+merge present sum min max minval maxval shape reshape
+
+allocate allocated associated

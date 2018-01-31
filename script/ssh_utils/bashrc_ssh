@@ -1,0 +1,33 @@
+#!/bin/bash
+
+function _ssh() {
+    COMPREPLY=()
+    local cur=${COMP_WORDS[COMP_CWORD]}; #current word
+    local com=${COMP_WORDS[COMP_CWORD-1]}; ##last word
+    test -e $DIR_SSH_UTILS/accounts || return 0
+    hosts=$(cat $DIR_SSH_UTILS/accounts)
+    case $com in
+    'ssh')
+        COMPREPLY=($(compgen -W "$hosts" -- $cur))
+ #       echo ${COMPREPLY[*]}
+    esac
+   return 0
+}
+
+
+function _scp() {
+    COMPREPLY=()
+    local cur=${COMP_WORDS[COMP_CWORD]}; #current word
+    local com=${COMP_WORDS[COMP_CWORD-1]}; ##last word
+    if [ -e $DIR_SSH_UTILS/accounts ]; then
+        hosts=$(cat $DIR_SSH_UTILS/accounts)
+        COMPREPLY=($(compgen  -W "$hosts" -- $cur))
+    fi
+#    _filedir
+    return 0
+}
+complete -F _ssh ssh -o default 
+complete -o default -F _scp scp
+##
+
+test -e $DIR_SSH_UTILS/.ssh_lastdir && source $DIR_SSH_UTILS/.ssh_lastdir

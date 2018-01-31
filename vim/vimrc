@@ -1,0 +1,30 @@
+syntax on
+filetype plugin on
+
+set hlsearch
+set mouse=v
+set tabstop=4 "number of space a tab occupies
+set expandtab "turn tab into space
+set autoindent "next line same with current line indent
+set smartindent "if, for e.g. indent
+set shiftwidth=4 "number of space when indent
+set nocp "not compatible with old vi
+set nu "set number lines on
+set backspace=indent,eol,start "function of backspace
+set fdm=marker
+
+
+" set keymaps
+map <C-X> :TlistOpen<CR>
+map <C-C> :TlistClose<CR>
+" - delete word around cursor
+imap <C-l> <C-[>diwi
+
+set guifont=Monaco:h14
+
+" set status bar
+set laststatus=2
+set statusline=%F%m\ [type=%Y]\ [line=%l,column=%c,%p%%]
+
+" jump to the last edit location
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif

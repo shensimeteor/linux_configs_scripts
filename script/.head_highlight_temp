@@ -1,0 +1,97 @@
+==> abspath.sh <==
+#!/bin/bash
+
+echo $(pwd)/$1
+
+
+==> add_color_lines.sh <==
+#!/bin/bash
+# --------------------------------------------------------------------------
+# Description:
+#
+#   add_color_lines.sh -c "color type" -k <key to grep the specify line> -f <file for the lines to read>
+
+==> construct_gm4dvar_h.sh <==
+#!/bin/bash
+
+if [ "$#" -ne 1 ] && [ "$#" -ne 2 ] ; then
+    echo "<Usage>: ./construct_gm4dvar_h.sh <name of your dir to construct> {-m | means only m4dv is need}"
+    exit
+
+==> construct_modelrun_new.sh <==
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "usage: construct_modelrun.sh <dir name of your construct>"
+    exit
+
+==> construct_modelrun.sh <==
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "usage: construct_modelrun.sh <dir name of your construct>"
+    exit
+
+==> free_node.sh <==
+#!/bin/bash
+if [ $# -eq 0 ]; then
+    n_request=1
+    maxload=100
+elif [ $# -eq 1 ]; then
+
+==> head_highlight.sh <==
+#!/bin/bash
+# --------------------------------------------------------------------------
+# Description:
+#
+#   same as 'head' but only to highlight each file title
+
+==> lib_update.sh <==
+#!/bin/bash
+n_file=$#
+if [ $n_file -eq 0 ]; then
+    echo "usage: ./lib_update.sh <file 1 to be update> <file2 to be update> .."
+    exit
+
+==> lsgrep_1.sh <==
+#!/bin/bash
+# shensi 
+
+if [ $# -ne 2 ] && [ $# -ne 3 ]; then
+    echo "run as: lsgrep.sh <dir to descend into> <keyword> [<maxlevel>] "
+
+==> lsgrep.sh <==
+#!/bin/bash
+# shensi 
+
+if [ $# -ne 2 ] && [ $# -ne 3 ]; then
+    echo "run as: lsgrep.sh <dir to descend into> <keyword> [<maxlevel>] "
+
+==> lslib.sh <==
+#!/bin/bash
+# shensi; find the lib file: $1 in your LD_LIBRARY_PATH;
+# usage: lslib.sh libnetcdf
+lib_path=$LD_LIBRARY_PATH
+lib_path=$(echo $lib_path | sed 's/:/  /g')
+
+==> scp_frljj.sh <==
+#!/bin/bash
+scp ljj@159.226.113.51:~/shensi/$@ .
+
+==> scp_ljli.sh <==
+#!/bin/bash
+if [ "$#" -ne "1" ]; then
+    echo "Usage: ./scp_ljli.sh <filename>"
+    exit
+fi
+
+==> scp_toljj.sh <==
+#!/bin/bash
+scp "$@" ljj@159.226.113.51:~/shensi/
+
+==> tail_highlight.sh <==
+#!/bin/bash
+# --------------------------------------------------------------------------
+# Description:
+#
+#   same as 'tail' but only to highlight each file title

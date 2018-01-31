@@ -1,0 +1,27 @@
+snippet make
+	CXX		= g++
+	CXXFLAGS	= -g -O0
+
+	INCLUDES	= 
+	LIBRARIES	= 
+
+	TARGETS		= 
+	OBJECTS		= 
+
+	%.o: %.cpp
+		$(CXX) -c $< $(CXXFLAGS) $(INCLUDES)
+
+	all: $(TARGETS)
+
+	: 
+		$(CXX) -o $@ $< $(CXXFLAGS) $(LIBRARIES)
+
+	.PHONY: clean
+
+	clean:
+		@for target in $(TARGETS); do \
+			rm -rf *.o $$target $$target.dSYM; \
+			if [ $$? == 0 ]; then \
+				echo "$$target is cleaned."; \
+			fi; \
+		done

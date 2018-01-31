@@ -1,0 +1,78 @@
+netcdf atb532_2D_GAMIL_amip_r1i1p1_197905010000-197905312100 {
+dimensions:
+	time = UNLIMITED ; // (248 currently)
+	lev = 26 ;
+	column = 20 ;
+	lat = 60 ;
+	lon = 128 ;
+	bnds = 2 ;
+variables:
+	double time(time) ;
+		time:bounds = "time_bnds" ;
+		time:units = "days since 1979-01-01" ;
+		time:calendar = "noleap" ;
+		time:axis = "T" ;
+		time:long_name = "time" ;
+		time:standard_name = "time" ;
+	double time_bnds(time, bnds) ;
+	double lev(lev) ;
+		lev:bounds = "lev_bnds" ;
+		lev:axis = "Z" ;
+		lev:long_name = "atmospheric model level" ;
+	double lev_bnds(lev, bnds) ;
+	double column(column) ;
+		column:units = "1" ;
+		column:long_name = "column" ;
+		column:standard_name = "column" ;
+	double lat(lat) ;
+		lat:bounds = "lat_bnds" ;
+		lat:units = "degrees_north" ;
+		lat:axis = "Y" ;
+		lat:long_name = "latitude" ;
+		lat:standard_name = "latitude" ;
+	double lat_bnds(lat, bnds) ;
+	double lon(lon) ;
+		lon:bounds = "lon_bnds" ;
+		lon:units = "degrees_east" ;
+		lon:axis = "X" ;
+		lon:long_name = "longitude" ;
+		lon:standard_name = "longitude" ;
+	double lon_bnds(lon, bnds) ;
+	float atb532(time, lev, column, lat, lon) ;
+		atb532:standard_name = "volume_attenuated_backwards_scattering_function_in_air" ;
+		atb532:long_name = "Lidar Attenuated Total Backscatter (532 nm)" ;
+		atb532:units = "m-1 sr-1" ;
+		atb532:history = "2011-10-03T04:08:39Z altered by CMOR: replaced missing value flag (-1e+30) with standard missing value (1e+20)." ;
+		atb532:missing_value = 1.e+20f ;
+		atb532:_FillValue = 1.e+20f ;
+		atb532:associated_files = "baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_GAMIL_amip_r0i0p0.nc" ;
+
+// global attributes:
+		:institution = "IAP (Institute of Atmospheric Physics, Chinese Academy of Sciences, Beijing, China) and THU (Tsinghua University)" ;
+		:institute_id = "LASG-CESS" ;
+		:experiment_id = "amip" ;
+		:source = "GAMIL2.0 (128x60L26)" ;
+		:model_id = "GAMIL" ;
+		:forcing = "GHG,SA,Oz,Sl,AA" ;
+		:parent_experiment_id = "N/A" ;
+		:parent_experiment_rip = "N/A" ;
+		:branch_time = 0. ;
+		:contact = "Dr. Tianjun ZHOU, Email: ztj@lasg.iap.ac.cn" ;
+		:initialization_method = 1 ;
+		:physics_version = 1 ;
+		:tracking_id = "b527e6fb-b47c-4ade-9797-93643b65e50f" ;
+		:cosp_version = "COSP v1.3.2" ;
+		:product = "output" ;
+		:experiment = "AMIP" ;
+		:frequency = "subhr" ;
+		:creation_date = "2011-10-03T04:08:41Z" ;
+		:history = "2011-10-03T04:08:39Z CMOR rewrote data to comply with CF standards and CMIP5 requirements." ;
+		:Conventions = "CF-1.4" ;
+		:project_id = "CMIP5" ;
+		:table_id = "Table 2D (02 April 2010) 4d6cd157f462fe09d060a27f2c56a4b1" ;
+		:title = "GAMIL model output prepared for CMIP5 AMIP" ;
+		:parent_experiment = "N/A" ;
+		:modeling_realm = "atmos" ;
+		:realization = 1 ;
+		:cmor_version = "2.7.1" ;
+}

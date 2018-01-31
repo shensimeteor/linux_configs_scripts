@@ -1,0 +1,100 @@
+snippet load2
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+snippet load3
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
+snippet load4
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
+snippet load4s
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
+	load "$MYLIB/NCL/ss_ncl.ncl"
+snippet load5
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRFUserARW.ncl"
+snippet load6
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRFUserARW.ncl"
+	load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRF_contributed.ncl"
+snippet beg
+	begin
+
+		${1:start_here}
+
+	end
+snippet addfile(
+	addfile("${1:file_name}", "${2:r}")
+snippet openwks
+	wks = gsn_open_wks("${1:figure_type}", "${2:figure_name}")
+snippet defcolor
+	gsn_define_colormap(wks, "${1:colormap_name}")
+snippet do
+	do ${1:i} = ${2:1}, ${3:n}
+
+	end do
+snippet gsnmax
+	${1:res}@gsnMaximize = True
+snippet spcolor
+	${1:res}@gsnSpreadColors = True
+snippet ;-
+	; ------------------------------------------------------------------------------
+snippet newfile
+	${1:file_path} = "${2:file_path}"
+	system("test -f "+$1+" && rm "+$1)
+	${3:f} = addfile($1, "c")
+	; ------------------------------------------------------------------------------
+	; setup new file
+	setfileoption($1, "DefineMode", True)
+	
+	dim_names = (/${4:set dim names}/)
+	dim_sizes = (/${5:set dim sizes}/)
+	dim_unlim = (/${6:set ulim tags}/)
+	filedimdef($3, dim_names, dim_sizes, dim_unlim)
+	
+	filevardef($3, "${7:var_name}", "${8:var_type}", (/${9:dims}/))
+	
+	setfileoption($3, "DefineMode", False)
+snippet desc
+	; --------------------------------------------------------------------------
+	; Description:
+	;
+	;   ${1:Describe something here.}
+	;
+	; History:
+	;
+	;   `system("date +%Y-%m-%d")`   [`system("whoami")`]: First creation.
+	; --------------------------------------------------------------------------
+snippet desc_add
+	;   `system("date +%Y-%m-%d")`   [`system("whoami")`]: ${1: waht you done?}.
+snippet undefproc
+	undef("${1:procedure name?}")
+	procedure $1(${2:variables})
+	local 
+	begin
+
+		${3:todo}
+
+	end
+snippet undeffunc
+	undef("${1:procedure name?}")
+	function $1(${2:variables})
+	local 
+	begin
+
+		${3:todo}
+
+	end
+

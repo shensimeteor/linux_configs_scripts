@@ -1,0 +1,68 @@
+# #!/bin/bash
+snippet #!
+	#!/bin/bash
+snippet desc
+	# --------------------------------------------------------------------------
+	# Description:
+	#
+	#   ${1:Describe something here.}
+	#
+	# History:
+	#
+	#   `system("date +%Y-%m-%d")`: [`system("whoami")`]: First creation.
+	# --------------------------------------------------------------------------
+	
+snippet if
+	if [[ ${1:condition} ]]; then
+		${2:#statements}
+	fi
+snippet elif
+	elif [[ ${1:condition} ]]; then
+		${2:#statements}
+snippet for
+	for (( ${2:i} = 0; $2 < ${1:count}; $2++ )); do
+		${3:#statements}
+	done
+snippet wh
+	while [[ ${1:condition} ]]; do
+		${2:#statements}
+	done
+snippet until
+	until [[ ${1:condition} ]]; do
+		${2:#statements}
+	done
+snippet case
+	case ${1:word} in
+		${2:pattern})
+			${3};;
+	esac
+snippet chkret
+	if [ $? -ne 0 ]; then
+	    echo "${1:words}"
+		exit 2
+	fi
+snippet chkexist
+	if [ ! -e "${1:file}" ]; then
+	    echo "$1 not exist!"
+	    exit 2
+	fi
+snippet rmmkdir
+	test -d ${1:dir} && rm -rf $1
+	mkdir $1
+snippet rmmkdircd
+	test -d ${1:dir} && rm -rf $1
+	mkdir $1
+	cd $1
+snippet readarg
+	narg=$#
+	if [ $narg -ne ${1:n_arg} ]; then
+	    echo "${2:command help print}"
+		exit 2
+	fi
+snippet ##
+	##### ${1:comment} ###########
+snippet ###
+	#################################
+	## ${1:comment} #####
+	#################################
+
