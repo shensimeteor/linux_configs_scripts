@@ -121,6 +121,7 @@ fi
 #################################
 
 ##### shortcuts ###########
+alias set_sshagent="source ~/script/set_ssh_agent.sh"
 alias cheye="ssh -X sishen@cheyenne.ucar.edu"
 alias cddata="cd $HOME/data/"
 alias cdbackup="cd $HOME/backup/"
