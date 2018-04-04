@@ -57,9 +57,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='[${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='[${debian_chroot:+($debian_chroot)}\u@\h:\w]\$'
 fi
 unset color_prompt force_color_prompt
 
@@ -129,6 +129,7 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias ls='ls --color=auto -F'
 alias ll='ls --color=auto -l -a --time-style="+%Y-%m-%d %H:%M:%S"'
+alias activate_pyenv=". /home/sish3896/data/onDaViTPy/davitpy7/bin/activate"
 
 
 ##### DIRS ###########
@@ -144,6 +145,9 @@ export SCRIPT="$HOME/script/"
 ##use python2 default
 export PATH="/opt/anaconda2/bin:$PATH"
 
+## on ral ftp
+export PATH="$HOME/script/ral_ftp/:$PATH"
+
 ## on Dustbin
 export DIR_DUSTBIN=$DATA/_DUSTBIN #where the dustbin-dir is
 export DIR_DUSTBIN_SH=$HOME/script/Dustbin #where the script is
@@ -154,3 +158,15 @@ alias cddust="cd $DIR_DUSTBIN"
 alias cddust_today=". $DIR_DUSTBIN_SH/cddust_today.sh"
 alias clrdust="/bin/rm -rf $DIR_DUSTBIN/*"
 
+##### git prompt ###########
+alias gitcolorhelp="echo -e ' Grey *: unmerged path;\n Red *: untracked files/changes;\n Yellow *: changes to be committed'"
+function get_git_branch_now  {
+    git branch --no-color 2> /dev/null | awk '/\*/{printf "\033[34m[>"$2"]\033[0m" }'
+}
+function get_git_status_now {
+    git status 2> /dev/null | grep -q "Unmerged paths"  && echo -e '\033[41;37m*\033[0m' &&  return 0           
+    git status 2> /dev/null | grep -qE "Changes not staged for commit|Changed but not updated|Untracked files" && echo -e '\033[31m*\033[0m' &&  return 0      
+    git status 2> /dev/null | grep -q "Changes to be committed" && echo -e '\033[33m*\033[0m' &&  return 0  
+}
+PS1="[\u@\h \w]\[\$(get_git_branch_now)\]\[\$(get_git_status_now)\]\\$ "
+#PS1="\[\e[36m\][\u\[\e[0m\]\[\e[5m\]@\[\e[0m\]\h \[\e[32m\]\w\[\e[36m\]]\[\e[0m\]\[\$(get_git_branch_now)\]\[\$(get_git_status_now)\]\\$ "
