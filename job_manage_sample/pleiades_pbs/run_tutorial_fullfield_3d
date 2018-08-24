@@ -1,0 +1,49 @@
+#!/bin/sh -l
+#
+#PBS -N joaquin3d_xb
+#PBS -A s1452
+#PBS -q devel
+#PBS -l select=1:ncpus=16:mpiprocs=1:model=has+5:ncpus=16:mpiprocs=16:model=has
+#PBS -l walltime=01:55:00
+#PBS -W umask=027
+
+module load comp-intel
+module load mpi-sgi/mpt
+set -aeux
+ulimit -s unlimited
+#BASEPATH=/scratch3/NCEPDEV/swpc/save/Adam.Kubaryk/ledev/bin # folder with executables
+BASEPATH=/nobackupp2/sshen3/onLedev/ledev/ledev_gitrepo/bin/
+#DATAPATH=/scratch3/NCEPDEV/swpc/noscrub/Adam.Kubaryk/ENS/       # folder where experiment(s) is/are
+#DATAPATH=/scratch4/NCEPDEV/stmp4/Adam.Kubaryk/
+#DATAPATH=/scratch3/NCEPDEV/swpc/noscrub/Adam.Kubaryk/
+DATAPATH=/nobackupp2/sshen3/onLedev/Joaquin_Case/data/2015100118_for3d/
+#DATAPATH=/nobackupp2/sshen3/onLedev/Joaquin_Case/data/2015100118_for3d/
+FNMEAN=_ensmean                                                 # postfix for spectral ensemble mean data
+FNINFO=_ensinfo                                                 # postfix for binary ensemble mean/spread data
+FNOUT=_edim                                                     # postfix for LEDEV perturbation files
+CHARANAL=80                                                     # number of ensemble members
+CHARVARS=3                                                      # outdated... not used
+
+CHARGRID=37                                                     # CHARGRIDxCHARGRID analysis gridsize
+EDIR=""                                                 # experiment folder, appended to $DATAPATH
+
+cd /nobackupp2/sshen3/onLedev/Joaquin_Case/pbs/
+#FILEPREFIXES=("siganl_2015100200")
+FILEPREFIXES=("sfg_2015100118_fhr06")
+for FILEPREFIX in ${FILEPREFIXES[@]}
+do
+# get ensemble mean (if mean does not exist)
+if [ ! -f $DATAPATH$EDIR$FILEPREFIX$FNMEAN ]
+then
+mpiexec -n 80 $BASEPATH/getsigensmean.x $DATAPATH$EDIR $FILEPREFIX$FNMEAN $FILEPREFIX $CHARANAL
+fi
+# run info (if info does not exist)
+if [ ! -f $DATAPATH$EDIR$FILEPREFIX$FNINFO ]
+then
+mpiexec -n 80 $BASEPATH/getsigensspread.x $DATAPATH$EDIR $DATAPATH$EDIR$FILEPREFIX$FNMEAN $FILEPREFIX$FNINFO $FILEPREFIX $CHARANAL
+fi
+# run perturbs always
+export OMP_NUM_THREADS=16
+export OMP_STACKSIZE=100M
+mpiexec -n 81 $BASEPATH/getperturbations_joaquin_region.x $DATAPATH$EDIR $DATAPATH$EDIR$FILEPREFIX$FNMEAN $FILEPREFIX$FNOUT $FILEPREFIX $CHARANAL $CHARVARS $CHARGRID &> log_xb.txt
+done

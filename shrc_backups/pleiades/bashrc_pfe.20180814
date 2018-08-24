@@ -1,0 +1,112 @@
+source /usr/local/lib/global.profile
+#################################
+## begin as si shen modification #####
+#################################
+
+##### shortcuts ###########
+alias set_sshagent="source ~/script/set_ssh_agent.sh"
+#alias cheye="ssh -X sishen@cheyenne.ucar.edu"
+#alias cddata="cd $HOME/data/"
+#alias cdbackup="cd $HOME/backup/"
+alias cp="cp -i"
+alias mv="mv -i"
+alias ls='ls --color=auto -F'
+alias ll='ls --color=auto -l -a --time-style="+%Y-%m-%d %H:%M:%S"'
+##specific to PFE/LFE##
+alias show_queue='qstat -Q long low normal debug devel ldan'
+alias show_myjob='qstat -s -nu sshen3'
+alias show_jobsinQ='qstat -a ' #show all jobs in one q
+alias show_nodes="node_stats"
+alias activate_pyenv="source /u/sshen3/myenv/bin/activate"
+alias put_cheyenne="bash /home1/sshen3/script/cheyenne_related/put_cheyenne.sh"
+alias get_cheyenne="bash /home1/sshen3/script/cheyenne_related/get_cheyenne.sh"
+
+##### DIRS ###########
+#export DATA="$HOME/data/"
+#export BACKUP="$HOME/backup"
+#export SCRIPT="$HOME/script/"
+
+##### ENV-VARS ###########
+export PATH="/u/scicon/tools/bin:$PATH"
+export PATH="$HOME/bin:$HOME/script:$PATH"
+export PATH="/home1/sshen3/bin/Grad2NCL/:$PATH"
+export PATH="$HOME/script/ral_ftp/:$PATH"
+ulimit -s unlimited
+
+
+##### SOFTWARE ###########
+## on NASA CDF
+#. /home/sish3896/opt/cdf/cdf36_4-dist/bin/definitions.B
+
+## on Dustbin
+export DIR_DUSTBIN=$HOME/nobackup/_DUSTBIN #where the dustbin-dir is
+export DIR_DUSTBIN_SH=$HOME/script/Dustbin #where the script is
+alias RM=/bin/rm
+alias rm="$DIR_DUSTBIN_SH/mv_to_dustbin.sh"
+alias recover="$DIR_DUSTBIN_SH/recover_dust.sh"
+alias cddust="cd $DIR_DUSTBIN"
+alias cddust_today=". $DIR_DUSTBIN_SH/cddust_today.sh"
+alias clrdust="/bin/rm -rf $DIR_DUSTBIN/*"
+
+## on GoTo
+export DIR_GT="$HOME/script/GoTo"
+alias gt=". $DIR_GT/gt_root.sh"
+. $DIR_GT/bashrc_gt
+#NAS/PFE module
+module use -a /home1/akubaryk/modulefiles
+module load comp-intel
+module load mpi-sgi/mpt
+module load w3nco w3emc sp bacio nemsio esmf/7.1.0bs49 netcdf/4.4.4 szip
+module load ncl
+module load hdf4
+#temp, modify: 
+# serial
+#module load hdf5
+#module load netcdf/4.4.1.1_serial
+#export PATH="/nasa/netcdf/4.4.1.1_serial/bin:$PATH"
+#export LD_LIBRARY_PATH="/home1/sshen3/hdf5_liblink/:$LD_LIBRARY_PATH"
+# mpt
+module load hdf5/1.8.18_mpt
+module load netcdf/4.4.1.1_mpt
+
+module load nco
+module load cdo
+module load pkgsrc
+
+#module load nco
+#module load ncview
+#module load python -- already have virtualenv, so comment the builtin python
+
+
+##short cut###
+alias ss2nc4_T382_gaussian="ss2nc4 -i 1152 -j 576 -d 4 -s"
+alias quota_nobackup="lfs quota -h -u $USER /nobackup/$USER"
+alias diffdir="diff --brief -Nr"
+
+export SIGIO_INC4="/nobackupp2/sshen3/save/sigio_v2.0.1/install_ss/sigio_v2.0.1/include/"
+export SIGIO_LIB4="/nobackupp2/sshen3/save/sigio_v2.0.1/install_ss/sigio_v2.0.1/lib/libsigio.a"
+
+##### PS1 ###########
+PS1="[\u@\h \w]\$ "
+
+# added by Anaconda3 installer
+#export PATH="/u/sshen3/anaconda3/bin:$PATH"
+
+##### git prompt ###########
+alias gitcolorhelp="echo -e ' Grey *: unmerged path;\n Red *: untracked files/changes;\n Yellow *: changes to be committed'"
+function get_git_branch_now  {
+    git branch --no-color 2> /dev/null | awk '/\*/{printf "\033[34m[>"$2"]\033[0m" }'
+}
+function get_git_status_now {
+    git status 2> /dev/null | grep -q "Unmerged paths"  && echo -e '\033[41;37m*\033[0m' &&  return 0     
+    git status 2> /dev/null | grep -qE "Changes not staged for commit|Changed but not updated|Untracked files" && echo -e '\033[31m*\033[0m' &&  return 0     
+    git status 2> /dev/null | grep -q "Changes to be committed" && echo -e '\033[33m*\033[0m' &&  return 0   
+}
+PS1="[\u@\h \w]\[\$(get_git_branch_now)\]\[\$(get_git_status_now)\]\\$ "
+
+## GSI
+export WRF_DIR="/home1/sshen3/nobackup/save/WRFV3/"
+#export NETCDF="/nasa/pkgsrc/sles12/2016Q4/"
+export NETCDF="/nasa/netcdf/4.4.1.1_mpt/"
+export LAPACK_PATH="/nasa/intel/Compiler/2018.3.222/compilers_and_libraries_2018.3.222/linux/mkl/"  #MKLROOT
+

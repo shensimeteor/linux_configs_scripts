@@ -1,0 +1,28 @@
+#################################
+## ~/.bashrc on LFE differs from PFE #####
+## - modules differ, myenv_lfe, package_lfe differ from myenv, package ##
+#################################
+
+alias cp="cp -i"
+alias mv="mv -i"
+alias ls='ls --color=auto -F'
+alias ll='ls --color=auto -l -a --time-style="+%Y-%m-%d %H:%M:%S"'
+alias show_queue='qstat -Q long low normal debug devel ldan'
+alias show_myjob='qstat -s -u sshen3'
+
+PS1="[\u@\h \w]\$ "
+
+#NAS/PFE module
+module load comp-intel
+module load mpi-sgi/mpt
+module load ncl
+module load hdf4
+module load hdf5
+module load netcdf
+#module load nco
+#module load ncview
+module load netcdf
+#module load python
+export PATH="/u/sshen3/anaconda3/bin:$PATH"
+export LD_LIBRARY_PATH="/u/sshen3/package_lfe/geos-3.3.3/lib/:$LD_LIBRARY_PATH"
+alias activate_pyenv="source /u/sshen3/myenv_lfe/bin/activate"
