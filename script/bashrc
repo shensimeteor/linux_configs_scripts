@@ -1,0 +1,49 @@
+# Source global definitions
+# modify for Mac (ls -G replace of --color=tty)
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+        fi
+export PS1="[\u@\h \W]\$ "
+
+
+if [ -e ~/.common_envvars.sh ]; then
+    . ~/.common_envvars.sh
+fi
+
+# User specific aliases and functions
+alias vi='vim'
+#alias ls='ls -G'
+#alias ll='ls -G'
+alias grep='grep --color'
+alias cp='cp -i'
+alias mv='mv -i'
+alias k='kill'
+
+
+## on Dustbin
+export DIR_DUSTBIN=$HOME/_DUSTBIN
+export DIR_DUSTBIN_SH=$HOME/script/Dustbin
+alias RM=/bin/rm
+alias rm="$DIR_DUSTBIN_SH/mv_to_dustbin.sh"
+alias recover="$DIR_DUSTBIN_SH/recover_dust.sh"
+alias cddust="cd $DIR_DUSTBIN"
+alias cddust_today=". $DIR_DUSTBIN_SH/cddust_today.sh"
+alias clrdust="/bin/rm -rf $DIR_DUSTBIN/*"
+
+## GoTo
+export DIR_GT="$HOME/script/GoTo/"
+alias gt=". $DIR_GT/gt_root.sh"
+. $DIR_GT/bashrc_gt
+
+
+##ssh_utils
+export DIR_SSH_UTILS=$HOME/script/ssh_utils
+. $DIR_SSH_UTILS/bashrc_ssh
+alias ssh='. $DIR_SSH_UTILS/alias_ssh.sh'
+alias scp='. $DIR_SSH_UTILS/alias_scp.sh'
+alias cdlast='cd $LASTDIR'
+
+##highlight of head/tail
+alias chead='$HOME/script/head_highlight.sh'
+alias ctail='$HOME/script/tail_highlight.sh'
+

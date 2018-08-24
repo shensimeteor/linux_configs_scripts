@@ -1,0 +1,127 @@
+#bindkey
+bindkey '\e[1~' beginning-of-line      # Home
+bindkey '\e[3~' delete-char            # Delete
+bindkey '\e[4~' end-of-line            # End
+bindkey "^W" backward-delete-word      # Delete
+bindkey '\e[5~' history-search-backward  # PageUp
+bindkey '\e[6~'  history-search-forward # PageDown
+
+#alias
+alias grep 'grep --color=AUTO'
+alias . 'source'
+alias .. 'cd ..'
+alias ls 'ls --color=auto -F'
+alias ll 'ls --color=auto -l -a --time-style="+%Y-%m-%d %H:%M:%S"'
+alias cdscratch 'cd $HOME/Scratch/'
+alias cdwork 'cd $HOME/Work/'
+alias cp 'cp -i'
+alias mv 'mv -i'
+alias smac4 'ssh c4test@smac-c4-int2.rap.ucar.edu'
+alias cmdmatlib "matlab -nojvm -nodesktop -nosplash"
+
+#env
+set prompt="[%n@%m %~]$ "
+setenv WORK $HOME/Work
+setenv SCRATCH $HOME/Scratch
+setenv SCRIPT $HOME/script
+setenv MYLIB $HOME/MyLib
+setenv SSNCL /glade/u/home/sishen/MyLib/NCL/lib/
+#setenv TMPDIR /glade/u/home/sishen/Scratch/temp/
+#module
+module load ncview
+module load ncl
+setenv NCARG_RANGS "/glade/u/home/sishen/Packages/NCL/rangs/"
+module load nco
+module load git
+#module load python
+
+#module load mkl
+module load matlab
+##for jupyter
+#module load pyzmq/16.0.2
+#module load tornado/4.4.3
+#module load jupyter
+#module load numpy/1.11.0
+#module load scipy/0.17.1
+#module load netcdf4python
+#module load numexpr/2.6.0
+#module load bottleneck/1.1.0
+#module load pandas/0.18.1
+#module load patsy/0.4.1
+#module load scikit-learn
+#module load pyside
+#module load matplotlib/1.5.1
+#module load seaborn
+#python lib
+##my script
+# on Dustbin
+setenv DIR_DUSTBIN $SCRATCH/_DUSTBIN
+setenv DIR_DUSTBIN_SH $HOME/script/Dustbin
+alias RM /bin/rm
+alias rm "$DIR_DUSTBIN_SH/mv_to_dustbin.sh"
+alias recover "$DIR_DUSTBIN_SH/recover_dust.sh"
+alias cddust "cd $DIR_DUSTBIN"
+alias cddust_today "source $DIR_DUSTBIN_SH/cddust_today.csh"
+alias clrdust "/bin/rm -rf $DIR_DUSTBIN/*"
+# ftp rap
+alias ss_rapput "/glade/u/home/sishen/script/ral_ftp/ss_rapput"
+alias ss_rapget "/glade/u/home/sishen/script/ral_ftp/ss_rapget"
+alias ss_lrapput "/glade/u/home/sishen/script/ral_ftp/ss_lrapput"
+alias ftprap "ftp ftp.rap.ucar.edu"
+# reln
+alias reln "$SCRIPT/reln.sh"
+
+#diffall
+alias diffall "$SCRIPT/diffall.sh"
+
+#diffdir
+alias diffdir "diff --brief -Nr "
+
+#find error rsl
+alias fersl "$SCRIPT/find_error_rsl.sh"
+
+#
+alias show_myjob 'qstat -s -nu sishen'
+
+# temporal
+alias wrfdiff "source /glade/u/home/sishen/Work/RTFDDA_Update/WRF_base/check_revs/vimdiff_wrf.csh"
+alias cdwrf37 "cd /glade/u/home/sishen/Work/RTFDDA_Update/WRF_base/WRFV3.7/"
+alias cdwrf38 "cd /glade/u/home/sishen/Work/RTFDDA_Update/WRF_base/WRFV3.8.1/"
+alias cdralrevs "cd /glade/u/home/sishen/Work/RTFDDA_Update/revision_set/RAL3.8.1-R0/"
+alias cdchkrevs "cd /glade/u/home/sishen/Work/RTFDDA_Update/WRF_base/check_revs/"
+
+#path
+setenv PATH "~/Work/RTFDDA_Code/f90tohtml/":$PATH
+#setenv PATH "~/script/":$PATH
+
+#python
+#setenv PYTHONPATH "/glade/u/home/sishen/Packages/PythonLib/lib/python2.7/site-packages/"
+#setenv PATH "/glade/u/home/sishen/Packages/PythonLib/bin/:"$PATH
+setenv PATH "/glade/u/home/sishen/anaconda2/bin/:"$PATH
+
+#git
+source ~/.git-completion.tcsh
+set autolist=ambiguous
+
+#python3
+#setenv PYTHONPATH "/glade/u/home/sishen/Packages/PythonLib/lib/python3.6/site-packages/:"$PYTHONPATH
+#setenv PATH "/glade/u/home/sishen/software/python3.6.1/bin/:"$PATH
+
+#WRF
+setenv JASPERLIB /glade/u/home/wrfhelp/UNGRIB_LIBRARIES/lib 
+setenv JASPERINC /glade/u/home/wrfhelp/UNGRIB_LIBRARIES/include
+#GSI
+#module load lapack
+module load mkl
+setenv WRF_DIR /glade/u/home/sishen/Work/WRF/WRFV3/
+#setenv LAPACK_PATH /usr/lib64/
+setenv LAPACK_PATH "$MKLROOT/"
+setenv GSITUT /glade/u/home/sishen/Work/GSI/tutorial/
+#setenv LD_LIBRARY_PATH "/ncar/opt/intel/12.1.0.233/composer_xe_2011_sp1.11.339/mkl/lib/intel64/:$LD_LIBRARY_PATH"
+
+#for GSI to run on cheyenne
+module load impi/2017.1.132
+module load netcdf-mpi/4.4.1.1
+setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/gpfs/fs1/work/sishen/GSI/preCompiled/comGSIv3.6_EnKFv1.2/run/
+
+
