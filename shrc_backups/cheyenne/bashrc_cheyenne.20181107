@@ -1,0 +1,153 @@
+
+# If not running interactively, don't do anything
+ case $- in
+     *i*) ;;
+     *) return;;
+ esac
+
+ # don't put duplicate lines or lines starting with space in the history.
+ # See bash(1) for more options
+ HISTCONTROL=ignoreboth
+
+ # append to the history file, don't overwrite it
+ shopt -s histappend
+
+ # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+ HISTSIZE=1000
+ HISTFILESIZE=2000
+           
+#alias
+alias grep='grep --color=AUTO'
+alias ..='cd ..'
+alias ls='ls --color=auto -F'
+alias ll='ls --color=auto -l -a --time-style="+%Y-%m-%d %H:%M:%S"'
+alias cdscratch='cd $HOME/Scratch/'
+alias cdwork='cd $HOME/Work/'
+alias cp='cp -i'
+alias mv='mv -i'
+alias cmdmatlib="matlab -nojvm -nodesktop -nosplash"
+
+#env
+export WORK="$HOME/Work"
+export SCRATCH="$HOME/Scratch"
+export SCRIPT="$HOME/script"
+export MYLIB="$HOME/MyLib"
+export SSNCL="/glade/u/home/sishen/MyLib/NCL/lib/"
+#module
+module load ncview
+module load ncl
+export NCARG_RANGS="/glade/u/home/sishen/Packages/NCL/rangs/"
+module load nco
+module load git
+#module load python
+
+#module load mkl
+module load matlab
+##for jupyter
+#module load pyzmq/16.0.2
+#module load tornado/4.4.3
+#module load jupyter
+#module load numpy/1.11.0
+#module load scipy/0.17.1
+#module load netcdf4python
+#module load numexpr/2.6.0
+#module load bottleneck/1.1.0
+#module load pandas/0.18.1
+#module load patsy/0.4.1
+#module load scikit-learn
+#module load pyside
+#module load matplotlib/1.5.1
+#module load seaborn
+#python lib
+##my script
+# on Dustbin
+export DIR_DUSTBIN="$SCRATCH/_DUSTBIN"
+export DIR_DUSTBIN_SH="$HOME/script/Dustbin"
+alias RM="/bin/rm"
+alias rm="$DIR_DUSTBIN_SH/mv_to_dustbin.sh"
+alias recover="$DIR_DUSTBIN_SH/recover_dust.sh"
+alias cddust="cd $DIR_DUSTBIN"
+alias cddust_today="source $DIR_DUSTBIN_SH/cddust_today.csh"
+alias clrdust="/bin/rm -rf $DIR_DUSTBIN/*"
+# ftp rap
+alias ss_rapput="/glade/u/home/sishen/script/ral_ftp/ss_rapput"
+alias ss_rapget="/glade/u/home/sishen/script/ral_ftp/ss_rapget"
+alias ss_lrapput="/glade/u/home/sishen/script/ral_ftp/ss_lrapput"
+alias ftprap="ftp ftp.rap.ucar.edu"
+# reln
+alias reln="$SCRIPT/reln.sh"
+
+#diffall
+alias diffall="$SCRIPT/diffall.sh"
+
+#diffdir
+alias diffdir="diff --brief -Nr "
+
+#find error rsl
+alias fersl="$SCRIPT/find_error_rsl.sh"
+
+#
+alias show_myjob='qstat -s -nu sishen'
+
+# temporal
+#alias wrfdiff="source /glade/u/home/sishen/Work/RTFDDA_Update/WRF_base/check_revs/vimdiff_wrf.csh"
+#alias cdwrf37="cd /glade/u/home/sishen/Work/RTFDDA_Update/WRF_base/WRFV3.7/"
+#alias cdwrf38="cd /glade/u/home/sishen/Work/RTFDDA_Update/WRF_base/WRFV3.8.1/"
+#alias cdralrevs="cd /glade/u/home/sishen/Work/RTFDDA_Update/revision_set/RAL3.8.1-R0/"
+#alias cdchkrevs="cd /glade/u/home/sishen/Work/RTFDDA_Update/WRF_base/check_revs/"
+
+##path
+export PATH="~/Work/RTFDDA_Code/f90tohtml/":$PATH
+#setenv PATH "~/script/":$PATH
+
+#python
+#setenv PYTHONPATH "/glade/u/home/sishen/Packages/PythonLib/lib/python2.7/site-packages/"
+#setenv PATH "/glade/u/home/sishen/Packages/PythonLib/bin/:"$PATH
+export PATH="/glade/u/home/sishen/anaconda2/bin/:"$PATH
+
+#git
+source ~/.git-completion.bash
+
+#WRF
+export JASPERLIB="/glade/u/home/wrfhelp/UNGRIB_LIBRARIES/lib"
+export JASPERINC="/glade/u/home/wrfhelp/UNGRIB_LIBRARIES/include"
+#GSI
+#module load lapack
+module load mkl
+export WRF_DIR="/glade/u/home/sishen/Work/WRF/WRFV3/"
+#setenv LAPACK_PATH /usr/lib64/
+export LAPACK_PATH="$MKLROOT/"
+export GSITUT="/glade/u/home/sishen/Work/GSI/tutorial/"
+#setenv LD_LIBRARY_PATH "/ncar/opt/intel/12.1.0.233/composer_xe_2011_sp1.11.339/mkl/lib/intel64/:$LD_LIBRARY_PATH"
+
+#for GSI to run on cheyenne
+module load impi/2017.1.132
+module load netcdf-mpi/4.4.1.1
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/gpfs/fs1/work/sishen/GSI/preCompiled/comGSIv3.6_EnKFv1.2/run/"
+
+#for WRFDA to compile
+export HDF5="/glade/u/apps/ch/opt/netcdf-mpi/4.4.1.1/impi/2017.1.132/intel/17.0.1"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:$HDF5/lib"
+
+# git repo PS1
+#
+##### git prompt ###########
+alias gitcolorhelp="echo -e ' Grey *: unmerged path;\n Red *: untracked files/changes;\n Yellow *: changes to be committed'"
+function get_git_branch_now  {
+    git branch --no-color 2> /dev/null | awk '/\*/{printf "\033[34m[>"$2"]\033[0m" }'
+}
+function get_git_status_now {
+    git status 2> /dev/null | grep -q "Unmerged paths"  && echo -e '\033[41;37m*\033[0m' &&  return 0    
+    git status 2> /dev/null | grep -qE "Changes not staged for commit|Changed but not updated|Untracked files" && echo -e '\033[31m*\033[0m' &&  return 0    
+    git status 2> /dev/null | grep -q "Changes to be committed" && echo -e '\033[33m*\033[0m' &&  return 0   
+}
+PS1="[\u@\h \w]\[\$(get_git_branch_now)\]\[\$(get_git_status_now)\]\\$ "
+
+# esmf
+export LD_LIBRARY_PATH="/gpfs/fs1/work/sishen/opt/esmfx/7.1.0r-ncdfio-mpi/intel/17.0.1/lib/libO/Linux.intel.64.mpi.default/:$LD_LIBRARY_PATH"
+
+
+## on GoTo
+export DIR_GT="$HOME/script/GoTo"
+alias gt=". $DIR_GT/gt_root.sh"
+. $DIR_GT/bashrc_gt
